@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Soda City Sports Favorites</title>
+    <style>
+        body {
+                font-family: Arial, sans-serif;
+                color: white;
+                background-color: #333;
+                margin: 0;
+                padding: 0;
+            }
+            .top {
+                display: flex;
+                align-items: center;
+                gap: 16px; 
+                margin-bottom: 20px;
+            }
+            .logo {
+                width: 85px;
+                height: 45px;
+                background: #1e1e1e;
+                border: 2px 
+                solid #c44;
+            }
+            .top h1 { margin: 0;
+                font-size: 20px;
+            }
+            nav { margin-left: auto;
+                display: flex;
+                gap:8px;
+            }
+            nav span{padding: 8px 14px;
+                border-radius: 4px;
+                background: #ddd;
+                color: #222;
+                font-weight: bold;
+            }
+            nav .active{
+                background :#c44;
+                color: #fff
+            }
+            .score h1 {
+               text-align: center;
+            }
+            .articles {
+                margin:auto
+            }
+            .articles .left, .right{
+                height: 177px;
+            }
+            .articles .mid {
+                height: 321px;
+            }
+    </style>
+</head>
+
+<body>
+        <header class="top">
+            <img src="sodaCitysportslogo.png" alt="Soda City Sports logo" class ="logo">
+            <h1>Soda City Sports</h1>
+            <nav aria-label="main">
+                <span>HOME</span>
+                <span>NEWS</span>
+                <span class="active">SIGN UP</span>
+                <span>FAVORITES</span>
+            </nav>
+        </header>
+        <div class="score">
+            <h1>SCST - 10 @ SC - 28</h1>
+        </div>
+        <div class="articles">
+            <img src="images/VT-win.png" alt ="Sellers celebrates a touchdown." class ="left">
+            <img src="images/middle.png" alt ="SC players celebrate after scoring." class="mid">
+            <img src="images/pavia.png" alt ="Vanderbilt quarterback Diego Pavia." class="right">
+        </div>
+        <div class="highlights">
+            <img src="images/vid-placeholder.png" alt="A placeholder thumbnail for highlight videos." class="thumb">
+            <p>Jim Football scores a touchdown!</p>
+            <img src="images/vid-placeholder.png" alt="A placeholder thumbnail for highlight videos." class="thumb">
+            <p>Baseball team gets a home run!</p>
+            <img src="images/vid-placeholder.png" alt="A placeholder thumbnail for highlight videos." class="thumb">
+            <p>Rick Beeball makes a huge three!</p>
+        </div>
+    </body>
+</html>

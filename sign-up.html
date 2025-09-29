@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Soda City Sports Signup</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #333;
+            margin: 0;
+            padding: 0;
+        }
+        .top {
+            display: flex;
+            align-items: center;
+            gap: 16px; 
+            margin-bottom: 20px;
+        }
+        .logo {
+            width: 85px;
+            height: 45px;
+            background: #1e1e1e;
+            border: 2px 
+            solid #c44;
+        }
+        .top h1 { margin: 0;
+            font-size: 20px;
+        }
+        nav { margin-left: auto;
+            display: flex;
+            gap:8px;
+        }
+        nav span{padding: 8px 14px;
+            border-radius: 4px;
+            background: #ddd;
+            color: #222;
+            font-weight: bold;
+        }
+        nav .active{
+            background :#c44;
+            color: #fff
+        }
+        .container {
+            width: 100%;
+            max-width: 1440px;
+            margin: 0 auto;
+            padding: 20px;
+            display: flex;
+            justify-content: flex-start;
+        }
+        .signup-box {
+            width: 40%; /* 40% width of the screen */
+            background-color: #A94545;
+            color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .sign {
+            
+            width: 576px;
+            padding-left: 90px;
+            border-radius: 8px;
+        }
+        h1 {
+            text-align: left;
+            color: white;
+            font-size: 2em;
+            margin-bottom: 20px;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+        label {
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: white;
+        }
+        input, select {
+            padding: 12px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        input[type="submit"] {
+            background-color: #FF6F61; /* Lighter red for button */
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        input[type="submit"]:hover {
+            background-color: #FF4F3B;
+        }
+    </style>
+</head>
+<body>
+
+    <header class="top">
+            <img src="sodaCitysportslogo.png" alt="Soda City Sports logo" class ="logo">
+            <h1>Soda City Sports</h1>
+            <nav aria-label="main">
+                <span>HOME</span>
+                <span>NEWS</span>
+                <span class="active">SIGN UP</span>
+                <span>FAVORITES</span>
+            </nav>
+        </header>
+    <div class="container">
+        <div class="signup-box">
+            <h1>Join Soda City Sports!</h1>
+            <form action="/signup" method="POST">
+                <!-- First Name -->
+                <label for="first_name">First Name</label>
+                <input type="text" id="first_name" name="first_name" required placeholder="Enter your first name">
+
+                <!-- Last Name -->
+                <label for="last_name">Last Name</label>
+                <input type="text" id="last_name" name="last_name" required placeholder="Enter your last name">
+
+                <!-- Email Address -->
+                <label for="email">Email Address</label>
+                <input type="email" id="email" name="email" required placeholder="Enter your email address">
+
+                <!-- Password -->
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" required placeholder="Create a password">
+
+                <!-- Phone Number -->
+                <label for="phone">Phone Number</label>
+                <input type="tel" id="phone" name="phone" required placeholder="Enter your phone number">
+
+                <!-- Favorite Teams -->
+                <label for="teams">Favorite Sports Teams</label>
+                <select id="teams" name="teams" required>
+                    <option value="">Select Your Favorite Team</option>
+                    <option value="team_1">Team 1</option>
+                    <option value="team_2">Team 2</option>
+                    <option value="team_3">Team 3</option>
+                    <option value="team_4">Team 4</option>
+                    <option value="team_5">Team 5</option>
+                </select>
+
+                <!-- Submit Button -->
+                <input type="submit" value="Sign Up">
+            </form>
+        </div>
+        <div class="image">
+            <img src="images/sign.png" alt="A player signs a contract while smiling" class ="sign">
+        </div>
+    </div>
+
+</body>
+</html>
