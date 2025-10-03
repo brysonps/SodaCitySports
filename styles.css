@@ -40,12 +40,13 @@ nav{
   gap:8px;
 }
 
-nav span{
+nav a{
   padding:8px 14px;
   border-radius:4px;
   background:#ddd;
   color:#222;
   font-weight:bold;
+  text-decoration: none;
 }
 
 nav .active{
