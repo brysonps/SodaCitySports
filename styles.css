@@ -49,8 +49,8 @@ nav a{
   text-decoration: none;
 }
 
-nav .active{
-  background:#c44;
+nav a:hover{
+  background: #c44;
   color:#fff;
 }
 
