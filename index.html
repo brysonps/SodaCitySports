@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Soda City Sports</title>
 
-
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -40,27 +39,167 @@
             <li><span class="dot"></span><div><strong>College Basketball</strong> – Where local recruits are signing.</div></li>
             <li><span class="dot"></span><div><strong>College Baseball & Softball</strong> – Home runs across South Carolina.</div></li>
           </ul>
-          <p style="margin-top:8px">[See All Sports →]</p>
         </div>
+
+        
+        <section class="card" style="margin-top:12px;">
+          <h3>Featured Game of the Week</h3>
+          
+          <div style="display:flex; gap:12px; align-items:center; flex-wrap:wrap;">
+            <img src="images/UGAvsBAMA.png" 
+                  alt="Featured Game of the Week"
+                  style="width:250px; border-radius:6px; object-fit:cover;">
+
+            <div>
+              <p style="margin:0;">
+                <strong>Georgia Bulldogs vs Alabama Crimson Tide</strong><br>
+                Saturday, Dec 6th • 4:00 PM • Mercedes-Benz Stadium
+              </p>
+              <p style="margin-top:6px;">
+                The top dogs of the SEC face off in a fight for the SEC crown! UGA and Bama face off in the championship for the fifth time.
+                Alabama, having won the previous 4 meetings looks to keep their steak alive. On the other hand, possibly the most complete team 
+                in the country, the Georgia Bulldogs look to get their third SEC championship in five years. Check out the game on ABC or snag your tickets here!
+              </p>
+            </div>
+          </div>
+        </section>
       </div>
 
-      <!-- Right column -->
+    
       <aside class="panel">
-        <h3>SEC Baseball Ranking</h3>
-        <ol class="rank">
-          <li><span class="num">1.</span><span class="team">FLA</span> <span class="rec">7-0</span></li>
-          <li><span class="num">2.</span><span class="team">TEX</span> <span class="rec">7-0</span></li>
-          <li><span class="num">3.</span><span class="team">SC</span>  <span class="rec">7-0</span></li>
-          <li><span class="num">4.</span><span class="team">UGA</span> <span class="rec">6-1</span></li>
-          <li><span class="num">5.</span><span class="team">LSU</span> <span class="rec">5-2</span></li>
-          <li><span class="num">6.</span><span class="team">MISS</span><span class="rec">5-2</span></li>
-          <li><span class="num">7.</span><span class="team">ALA</span> <span class="rec">5-2</span></li>
-          <li><span class="num">8.</span><span class="team">OU</span>  <span class="rec">4-3</span></li>
-          <li><span class="num">9.</span><span class="team">TA&amp;M</span><span class="rec">4-3</span></li>
-          <li><span class="num">10.</span><span class="team">AUB</span><span class="rec">4-3</span></li>
-        </ol>
+
+        <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:8px;">
+          <button id="sport-prev" style="border:none; background:#eee; padding:4px 8px; cursor:pointer;">←</button>
+          <h3 id="sport-title" style="margin:0; text-align:center; flex:1;">
+            Upcoming SEC Football Games
+          </h3>
+          <button id="sport-next" style="border:none; background:#eee; padding:4px 8px; cursor:pointer;">→</button>
+        </div>
+
+        <div id="sport-football" class="sport-panel">
+          <div id="sec-football">Loading SEC football games...</div>
+        </div>
+
+        <div id="sport-mbb" class="sport-panel" style="display:none;">
+          <div id="sec-mbb">Loading SEC men’s basketball games...</div>
+        </div>
+
+        <div id="sport-wbb" class="sport-panel" style="display:none;">
+          <div id="sec-wbb">Loading SEC women’s basketball games...</div>
+        </div>
+
       </aside>
     </section>
   </div>
+
+<script>
+  function formatDateTime(isoString) {
+    const d = new Date(isoString);
+    if (Number.isNaN(d.getTime())) return isoString || "";
+
+    const date = d.toLocaleDateString(undefined, { month: "short", day: "numeric" });
+    const time = d.toLocaleTimeString(undefined, { hour: "numeric", minute: "2-digit" });
+
+    return date + " • " + time;
+  }
+
+  const SPORTS = [
+    {
+      id: "sport-football",
+      containerId: "sec-football",
+      title: "Upcoming SEC Football Games",
+      url: "https://site.api.espn.com/apis/site/v2/sports/football/college-football/scoreboard?groups=8"
+    },
+    {
+      id: "sport-mbb",
+      containerId: "sec-mbb",
+      title: "Upcoming SEC Men’s Basketball Games",
+      url: "https://site.api.espn.com/apis/site/v2/sports/basketball/mens-college-basketball/scoreboard?groups=23"
+    },
+    {
+      id: "sport-wbb",
+      containerId: "sec-wbb",
+      title: "Upcoming SEC Women’s Basketball Games",
+      url: "https://site.api.espn.com/apis/site/v2/sports/basketball/womens-college-basketball/scoreboard?groups=23"
+    }
+  ];
+
+  async function loadSecGames(sport) {
+    const container = document.getElementById(sport.containerId);
+    if (!container) return;
+
+    try {
+      const res = await fetch(sport.url);
+      if (!res.ok) throw new Error("HTTP " + res.status);
+
+      const data = await res.json();
+      const events = data.events || [];
+
+      if (!events.length) {
+        container.innerHTML = "<p>No games this week.</p>";
+        return;
+      }
+
+      const upcoming = events.filter(ev => {
+        const comp = ev.competitions?.[0];
+        const state = comp?.status?.type?.state;
+        return state === "pre" || state === "in";
+      });
+
+      const gamesToShow = (upcoming.length ? upcoming : events).slice(0, 5);
+
+      let html = "";
+      gamesToShow.forEach(ev => {
+        const comp = ev.competitions?.[0];
+        if (!comp) return;
+
+        const home = comp.competitors.find(c => c.homeAway === "home");
+        const away = comp.competitors.find(c => c.homeAway === "away");
+
+        html += `
+          <div style="border-bottom:1px solid #ddd; padding:6px 0; font-size:0.9rem;">
+            <strong>${away?.team?.displayName || "Away"}</strong>
+            @
+            <strong>${home?.team?.displayName || "Home"}</strong><br>
+            <small>${formatDateTime(ev.date)}</small>
+          </div>
+        `;
+      });
+
+      container.innerHTML = html;
+    } catch (err) {
+      console.error("SEC Error:", err);
+      container.innerHTML = "<p>Unable to load games.</p>";
+    }
+  }
+
+  let currentSport = 0;
+
+  function showSport(i) {
+    SPORTS.forEach((sport, idx) => {
+      document.getElementById(sport.id).style.display = idx === i ? "block" : "none";
+    });
+    document.getElementById("sport-title").textContent = SPORTS[i].title;
+    currentSport = i;
+  }
+
+  function nextSport() {
+    showSport((currentSport + 1) % SPORTS.length);
+  }
+
+  function prevSport() {
+    showSport((currentSport - 1 + SPORTS.length) % SPORTS.length);
+  }
+
+  document.addEventListener("DOMContentLoaded", () => {
+    SPORTS.forEach(loadSecGames);
+
+    document.getElementById("sport-next").addEventListener("click", nextSport);
+    document.getElementById("sport-prev").addEventListener("click", prevSport);
+
+    showSport(0);
+  });
+</script>
+
 </body>
 </html>
